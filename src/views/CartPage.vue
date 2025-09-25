@@ -56,12 +56,15 @@ async function checkout() {
 		<div v-if="store.cartItems.length === 0" class="alert alert-info">Your cart is empty.</div>
 
 		<ul class="list-group mb-3" v-else>
-			<li v-for="(item, idx) in store.cartItems" :key="idx" class="list-group-item d-flex justify-content-between align-items-center">
+			<li v-for="(item, idx) in store.cartItems" :key="idx" class="list-group-item d-flex justify-content-between align-items-center cart-item">
 				<div class="d-flex align-items-center gap-3">
-					<i class="fa-solid" :class="getIconForTopic(item.topic)"></i>
+					<i class="fa-solid cart-icon" :class="getIconForTopic(item.topic)"></i>
 					<div>
-						<div class="fw-semibold">{{ item.topic }}</div>
-						<small class="text-muted">{{ item.location }} — £{{ item.price }}</small>
+						<div class="cart-item-title">{{ item.topic }}</div>
+						<div class="cart-item-location">
+							<i class="fa-solid fa-map-marker-alt me-1 text-brand"></i>
+							{{ item.location }} — £{{ item.price }}
+						</div>
 					</div>
 				</div>
 				<button class="btn btn-sm btn-outline-danger" @click="removeFromCart(idx)">Remove</button>
@@ -88,4 +91,74 @@ async function checkout() {
 </template>
 
 <style scoped>
+/* Apple-style cart styling */
+.cart-item {
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 0.5rem;
+  transition: all 0.2s ease;
+}
+
+.cart-item:hover {
+  background-color: rgba(255, 255, 255, 0.02);
+}
+
+.cart-icon {
+  font-size: 1.25rem;
+  color: var(--text-muted);
+  width: 24px;
+  text-align: center;
+}
+
+.cart-item-title {
+  font-weight: 600;
+  font-size: 1rem;
+  letter-spacing: -0.01em;
+  color: var(--text-primary);
+  margin-bottom: 0.25rem;
+}
+
+.cart-item-location {
+  font-size: 0.875rem;
+  color: var(--text-body);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+
+.text-brand {
+  background: var(--brand-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-size: 0.8rem;
+}
+
+/* Apple-style headings */
+h1, h2 {
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.3;
+}
+
+/* Enhanced form styling */
+.form-label {
+  font-weight: 600;
+  font-size: 0.875rem;
+  letter-spacing: -0.01em;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+}
+
+.form-control {
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  border-radius: 8px;
+  padding: 12px 16px;
+}
+
+.form-text {
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
 </style>

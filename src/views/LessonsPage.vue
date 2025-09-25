@@ -3,6 +3,7 @@ import { onMounted, ref } from 'vue'
 import { api } from '../lib/api.js'
 import { store } from '../store.js'
 import { debounce } from '../lib/utils.js'
+import { getIconForTopic } from '../lib/icons.js'
 
 const loading = ref(false)
 const error = ref('')
@@ -66,9 +67,6 @@ onMounted(loadAll)
 					<input class="form-control" v-model="query" @input="doSearch" placeholder="Search activity, location, price, spaces..." />
 				</div>
 			</div>
-			<div class="col-12 d-flex gap-2 flex-wrap mt-2">
-				<span v-for="c in categories" :key="c" class="pill" :class="{ 'badge-featured': c==='All' }">{{ c }}</span>
-			</div>
 			<div class="col-6 col-md-3">
 				<label class="form-label">Sort by</label>
 				<select class="form-select" :value="store.sortBy" @change="changeSortBy">
@@ -98,13 +96,16 @@ onMounted(loadAll)
 					</template>
 					<template v-else>
 						<div class="thumb d-flex justify-content-center align-items-center bg-body-tertiary">
-							<i class="fa-solid fa-book fa-2xl text-secondary"></i>
+							<i :class="getIconForTopic(lesson.topic)" class="fa-4x text-secondary"></i>
 						</div>
 					</template>
 					<div class="position-absolute m-2 pill">FEATURED</div>
 					<div class="card-body">
-						<h5 class="card-title mb-1 text-light">{{ lesson.topic }}</h5>
-						<div class="text-muted">{{ lesson.location }}</div>
+						<h5 class="card-title mb-2 text-light">{{ lesson.topic }}</h5>
+						<div class="location-info d-flex align-items-center mb-2">
+							<i class="fa-solid fa-map-marker-alt me-2 text-brand"></i>
+							<span class="location-text">{{ lesson.location }}</span>
+						</div>
 					</div>
 					<ul class="list-group list-group-flush">
 						<li class="list-group-item">Price: £{{ lesson.price }}</li>
@@ -125,4 +126,53 @@ onMounted(loadAll)
 .thumb { height: 220px; width: 100%; object-fit: cover; }
 .hover-card { transition: transform .2s ease, box-shadow .2s ease; }
 .hover-card:hover { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(0,0,0,.35); }
+
+/* Apple-style location display */
+.location-info {
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.location-text {
+  color: var(--text-body);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+
+.text-brand {
+  background: var(--brand-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-size: 0.85rem;
+}
+
+/* Enhanced card styling */
+.card-title {
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.3;
+}
+
+.card-body {
+  padding: 1.25rem 1.25rem 0.75rem 1.25rem;
+}
+
+/* Apple-style form elements */
+.form-control {
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+
+.form-select {
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+
+.form-label {
+  font-weight: 600;
+  font-size: 0.875rem;
+  letter-spacing: -0.01em;
+  color: var(--text-primary);
+}
 </style>

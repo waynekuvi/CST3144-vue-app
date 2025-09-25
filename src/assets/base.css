@@ -14,21 +14,66 @@
 body {
   background: var(--bg-primary) !important;
   color: var(--text-body) !important;
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif !important;
+  font-weight: 400;
+  letter-spacing: -0.01em;
 }
 
-h1, h2, h3, h4, h5, h6 { color: var(--text-primary) !important; }
+h1, h2, h3, h4, h5, h6 { 
+  color: var(--text-primary) !important; 
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
 
 .card { background-color: var(--card-bg) !important; border: 1px solid rgba(255,255,255,0.06) !important; }
 .card .list-group-item { background-color: var(--card-bg) !important; color: var(--text-body); border-color: rgba(255,255,255,0.06); }
 
-.btn-brand { background: var(--brand-gradient); color: #fff; border: 0; }
-.btn-outline-brand { border: 1px solid var(--brand-start); color: #fff; }
+.btn-brand { 
+  background: var(--brand-gradient); 
+  color: #fff; 
+  border: 0; 
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  border-radius: 8px;
+  padding: 12px 24px;
+  transition: all 0.2s ease;
+}
+
+.btn-brand:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 20px rgba(138, 43, 226, 0.3);
+}
+
+.btn-outline-brand { 
+  border: 1px solid var(--brand-start); 
+  color: #fff; 
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  border-radius: 8px;
+}
 
 .badge-featured { background: #111; color: #fff; border: 1px solid rgba(255,255,255,0.12); }
 
 /* Hero */
 .hero { background: var(--bg-secondary); border-bottom: 1px solid rgba(255,255,255,0.08); }
-.pill { background: #222; color: var(--text-muted); padding: 2px 8px; border-radius: 999px; font-size: 12px; letter-spacing: 0.06em; }
+.pill { 
+  background: #222; 
+  color: var(--text-muted); 
+  padding: 4px 12px; 
+  border-radius: 999px; 
+  font-size: 11px; 
+  letter-spacing: 0.08em; 
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+/* Apple-style display typography */
+.display-5 {
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+}
 
 /* Inputs */
 .form-control { background: #151515; color: #fff; border: 1px solid rgba(255,255,255,0.12); }
