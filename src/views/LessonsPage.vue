@@ -13,7 +13,14 @@ async function loadAll() {
 	loading.value = true
 	error.value = ''
 	try {
-		store.lessons = await api.getLessons()
+        // Use cached lessons for instant paint
+        const cached = localStorage.getItem('lessons-cache')
+        if (cached && !store.lessons.length) {
+            try { store.lessons = JSON.parse(cached) } catch {}
+        }
+        const fresh = await api.getLessons()
+        store.lessons = fresh
+        localStorage.setItem('lessons-cache', JSON.stringify(fresh))
 	} catch (e) {
 		error.value = String(e.message || e)
 	} finally {

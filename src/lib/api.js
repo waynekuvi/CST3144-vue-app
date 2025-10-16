@@ -1,13 +1,18 @@
 const API_BASE = import.meta.env.VITE_API_BASE || 'http://localhost:3000'
 
 async function request(path, options = {}) {
-	const res = await fetch(`${API_BASE}${path}`, {
+    const controller = new AbortController()
+    const timeoutMs = options.timeoutMs ?? 4000
+    const t = setTimeout(() => controller.abort(), timeoutMs)
+    const res = await fetch(`${API_BASE}${path}`, {
 		...options,
 		headers: {
 			'Content-Type': 'application/json',
 			...(options.headers || {}),
 		},
+        signal: controller.signal,
 	})
+    clearTimeout(t)
 	if (!res.ok) {
 		const text = await res.text().catch(() => '')
 		throw new Error(`HTTP ${res.status}: ${text}`)
@@ -17,8 +22,8 @@ async function request(path, options = {}) {
 }
 
 export const api = {
-	getLessons() {
-		return request('/lessons')
+    getLessons() {
+        return request('/lessons', { timeoutMs: 4000 })
 	},
 	searchLessons(q) {
 		const u = new URL(`${API_BASE}/search`)
